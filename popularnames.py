@@ -30,16 +30,22 @@ with st.sidebar:
     year = st.slider('Choose a year', 1910, 2021)
     st.header(f'Top names by {year}')
     year_df = df[df['year']==year]
+    tab3, tab4 = st.tabs(['Girls','Boys'])
 
 
-    girls_names = year_df[year_df.sex=='F'].sort_values('n', ascending=False).head(5)['name']
-    boys_names = year_df[year_df.sex=='M'].sort_values('n', ascending=False).head(5)['name']
-
-    top_names = pd.concat([girls_names.reset_index(drop=True), boys_names.reset_index(drop=True)], 
-          ignore_index=True, axis=1)
-    top_names.columns = ['Girls','Boys']
-    top_names.index = [1,2,3,4,5]
-    st.dataframe(top_names)
+    with tab3:
+        girls_names = year_df[year_df.sex=='F'].sort_values('n', ascending=False).head(5)['name']
+        girls_names.index = [1,2,3,4,5]
+        st.dataframe(girls_names)
+    with tab4:
+        boys_names = year_df[year_df.sex=='M'].sort_values('n', ascending=False).head(5)['name']
+        boys_names.index = [1,2,3,4,5]
+        st.dataframe(boys_names)
+    # top_names = pd.concat([girls_names.reset_index(drop=True), boys_names.reset_index(drop=True)], 
+    #       ignore_index=True, axis=1)
+    # top_names.columns = ['Girls','Boys']
+    # top_names.index = [1,2,3,4,5]
+    # st.dataframe(top_names)
     
 
 
