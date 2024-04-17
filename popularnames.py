@@ -6,8 +6,8 @@ st.title('Popular Name Trends')
 
 
 # url = 'https://github.com/esnt/Data/raw/main/Names/popular_names.csv'
-df = pd.read_csv("C:/Users/meaga/Stat386Labs/-Unveiling-Insights-Exploring-Data-Science-Job-Market-Dynamics/df_glassdoor.csv")
-
+url = 'https://github.com/meaganbolton/-Unveiling-Insights-Exploring-Data-Science-Job-Market-Dynamics/blob/main/df_glassdoor.csv'
+df = pd.read_csv(url)
 
 city = st.text_input('Enter a city', value='Houston')
 ################################################################333
