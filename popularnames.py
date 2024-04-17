@@ -11,11 +11,7 @@ df = pd.read_csv(url)
 
 
 city = st.text_input('Enter a city', value='Houston')
-################################################################333
-# Filter data for the selected city
-city_df = df[df['City'] == city]
 
-st.header(f'{city} over time')
 
 # tab1, tab2 = st.tabs(['City','State'])
 # # Calculate average, min, and max salaries for each city
