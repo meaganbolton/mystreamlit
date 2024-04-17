@@ -14,14 +14,18 @@ all_states = df['State'].unique()
 # Create radio buttons for selecting cities or states
 chart_type = st.radio("Select Chart Type", ('Cities', 'States'))
 
-# Create radio buttons for selecting pay rate (Hourly or Yearly)
-#pay_rate = st.radio("Select Pay Rate", ('Hourly', 'Yearly'))
 # Create select box for pay rate
 pay_rate = st.selectbox("Pay Rate", ('Hourly', 'Yearly'))
 
 if chart_type == 'Cities':
+    # Filter cities based on selected pay rate
+    if pay_rate == 'Hourly':
+        available_cities = df[df['Pay rate'] == 'Hourly']['City'].unique()
+    else:
+        available_cities = all_cities
+
     # Create checkboxes for selecting cities
-    selected_cities = st.multiselect('Select cities', all_cities, default=all_cities)
+    selected_cities = st.multiselect('Select cities', available_cities, default=available_cities)
 
     # Filter data for the selected cities
     city_df = df[df['City'].isin(selected_cities)]
@@ -30,9 +34,6 @@ if chart_type == 'Cities':
     if city_df.empty:
         st.write("No data found for the selected cities. Please select other cities.")
     else:
-        # Filter data based on pay rate
-        city_df = city_df[city_df['Pay rate'] == pay_rate]
-
         # Calculate average, min, and max salaries for each city
         city_salary_stats = city_df[['City', 'Salary_Min', 'Salary_Max']].groupby('City').mean().reset_index()
 
@@ -50,8 +51,14 @@ if chart_type == 'Cities':
         # Show the bar chart for cities
         st.plotly_chart(fig)
 else:
+    # Filter states based on selected pay rate
+    if pay_rate == 'Hourly':
+        available_states = df[df['Pay rate'] == 'Hourly']['State'].unique()
+    else:
+        available_states = all_states
+
     # Create checkboxes for selecting states
-    selected_states = st.multiselect('Select states', all_states, default=all_states)
+    selected_states = st.multiselect('Select states', available_states, default=available_states)
 
     # Filter data for the selected states
     state_df = df[df['State'].isin(selected_states)]
@@ -60,9 +67,6 @@ else:
     if state_df.empty:
         st.write("No data found for the selected states. Please select other states.")
     else:
-        # Filter data based on pay rate
-        state_df = state_df[state_df['Pay rate'] == pay_rate]
-
         # Calculate average, min, and max salaries for each state
         state_salary_stats = state_df[['State', 'Salary_Min', 'Salary_Max']].groupby('State').mean().reset_index()
 
