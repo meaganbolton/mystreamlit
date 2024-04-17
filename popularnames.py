@@ -23,17 +23,17 @@ else:
     st.header(f'{city} over time')
 
     # Calculate average, min, and max salaries for each city
-    city_salary_stats = city_df.groupby('City').agg({'Salary Estimate': ['mean', 'min', 'max']}).reset_index()
+    city_salary_stats = city_df[['City', 'Salary_Min', 'Salary_Max']].groupby('City').mean().reset_index()
 
     # Plotting the bar chart
     fig = px.bar(city_salary_stats, 
                  y='City', 
-                 x=['mean', 'min', 'max'], 
+                 x=['Salary_Min', 'Salary_Max'], 
                  orientation='h',
                  barmode='group',
                  labels={'value': 'Salary ($)', 'variable': 'Statistic'},
                  title=f'Salary Comparison for {city}',
-                 color_discrete_map={'mean': 'blue', 'min': 'red', 'max': 'green'},
+                 color_discrete_map={'Salary_Min': 'red', 'Salary_Max': 'blue'},
                  )
 
     # Show the bar chart
