@@ -12,53 +12,32 @@ df = pd.read_csv(url)
 
 city = st.text_input('Enter a city', value='Houston')
 ################################################################333
+
 # Filter data for the selected city
 city_df = df[df['City'] == city]
 
-st.header(f'{city} over time')
+# Check if city_df is empty
+if city_df.empty:
+    st.write(f"No data found for {city}. Please enter another city.")
+else:
+    st.header(f'{city} over time')
 
-tab1, tab2 = st.tabs(['City','State'])
-# Calculate average, min, and max salaries for each city
-city_salary_stats = city_df.groupby('City').agg({'Salary Estimate': ['mean', 'min', 'max']}).reset_index()
-with tab1:
-    # plot_df = city_df[city_df['sex']=='F']
+    # Calculate average, min, and max salaries for each city
+    city_salary_stats = city_df.groupby('City').agg({'Salary Estimate': ['mean', 'min', 'max']}).reset_index()
+
+    # Plotting the bar chart
     fig = px.bar(city_salary_stats, 
-                y='City', 
-                x=['mean', 'min', 'max'], 
-                orientation='h',
-                barmode='group',
-                labels={'value': 'Salary ($)', 'variable': 'Statistic'},
-                title=f'Salary Comparison for {city}',
-                color_discrete_map={'mean': 'blue', 'min': 'red', 'max': 'green'},
-                )
-    st.plotly_chart(fig)
-# Calculate average, min, and max salaries for each city
-state_salary_stats = city_df.groupby('State').agg({'Salary Estimate': ['mean', 'min', 'max']}).reset_index()
-with tab1:
-    # plot_df = city_df[city_df['sex']=='F']
-    fig = px.bar(state_salary_stats, 
-                y='City', 
-                x=['mean', 'min', 'max'], 
-                orientation='h',
-                barmode='group',
-                labels={'value': 'Salary ($)', 'variable': 'Statistic'},
-                title=f'Salary Comparison for {city}',
-                color_discrete_map={'mean': 'blue', 'min': 'red', 'max': 'green'},
-                )
-    st.plotly_chart(fig)
-# Plotting the bar chart
-fig = px.bar(city_salary_stats, 
-             y='City', 
-             x=['mean', 'min', 'max'], 
-             orientation='h',
-             barmode='group',
-             labels={'value': 'Salary ($)', 'variable': 'Statistic'},
-             title=f'Salary Comparison for {city}',
-             color_discrete_map={'mean': 'blue', 'min': 'red', 'max': 'green'},
-             )
+                 y='City', 
+                 x=['mean', 'min', 'max'], 
+                 orientation='h',
+                 barmode='group',
+                 labels={'value': 'Salary ($)', 'variable': 'Statistic'},
+                 title=f'Salary Comparison for {city}',
+                 color_discrete_map={'mean': 'blue', 'min': 'red', 'max': 'green'},
+                 )
 
-# Show the bar chart
-st.plotly_chart(fig)
+    # Show the bar chart
+    st.plotly_chart(fig)
 #########################################################################################
 # name_df = df[df['City']==name]
 
