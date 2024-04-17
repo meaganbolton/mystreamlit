@@ -75,9 +75,9 @@ else:
         st.write("No data found for the selected states. Please select other states.")
     else:
         if pay_rate == "Hourly":
-            state_df = df[(df['City'].isin(selected_states)) & (df['Pay rate'] == 'Hourly')]
+            state_df = df[(df['State'].isin(selected_states)) & (df['Pay rate'] == 'Hourly')]
         else:
-            state_df = df[(df['City'].isin(selected_states)) & (df['Pay rate'] == 'Yearly')]
+            state_df = df[(df['State'].isin(selected_states)) & (df['Pay rate'] == 'Yearly')]
         # Calculate average, min, and max salaries for each state
         state_salary_stats = state_df[['State', 'Salary_Min', 'Salary_Max']].groupby('State').mean().reset_index()
 
