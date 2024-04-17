@@ -5,8 +5,8 @@ import streamlit as st
 st.title('Popular Name Trends')
 
 
-# url = 'https://github.com/esnt/Data/raw/main/Names/popular_names.csv'
-url = 'https://github.com/meaganbolton/-Unveiling-Insights-Exploring-Data-Science-Job-Market-Dynamics/blob/main/df_glassdoor.csv'
+url = 'https://github.com/esnt/Data/raw/main/Names/popular_names.csv'
+# url = 'https://github.com/meaganbolton/-Unveiling-Insights-Exploring-Data-Science-Job-Market-Dynamics/blob/main/df_glassdoor.csv'
 df = pd.read_csv(url)
 
 
