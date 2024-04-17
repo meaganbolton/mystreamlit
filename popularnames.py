@@ -15,7 +15,9 @@ all_states = df['State'].unique()
 chart_type = st.radio("Select Chart Type", ('Cities', 'States'))
 
 # Create radio buttons for selecting pay rate (Hourly or Yearly)
-pay_rate = st.radio("Select Pay Rate", ('Hourly', 'Yearly'))
+#pay_rate = st.radio("Select Pay Rate", ('Hourly', 'Yearly'))
+# Create select box for pay rate
+pay_rate = st.selectbox("Pay Rate", ('Hourly', 'Yearly'))
 
 if chart_type == 'Cities':
     # Create checkboxes for selecting cities
