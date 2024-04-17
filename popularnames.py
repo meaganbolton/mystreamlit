@@ -20,11 +20,11 @@ pay_rate = st.selectbox("Pay Rate", ('Hourly', 'Yearly'))
 if chart_type == 'Cities':
     # Filter cities based on selected pay rate
     if pay_rate == 'Hourly':
-        available_cities = all_cities[all_cities['Pay rate'] == 'Hourly']
-    elif pay_rate == "Yearly":
-        available_cities = all_cities[all_cities['Pay rate'] == 'Yearly']
+        available_cities = df[df['Pay rate'] == 'Hourly']['City'].unique()
+
     else:
-        available_cities = all_cities
+        available_cities = df[df['Pay rate'] == 'Yearly']['City'].unique()
+
 
     # Create checkboxes for selecting cities
     selected_cities = st.multiselect('Select cities', available_cities, default=available_cities)
@@ -37,6 +37,11 @@ if chart_type == 'Cities':
         st.write("No data found for the selected cities. Please select other cities.")
     else:
         # Calculate average, min, and max salaries for each city
+        if pay_rate == "Hourly":
+            city_df = df[(df['City'].isin(selected_cities)) & (df['Pay rate'] == 'Hourly')]
+        else:
+            city_df = df[(df['City'].isin(selected_cities)) & (df['Pay rate'] == 'Yearly')]
+
         city_salary_stats = city_df[['City', 'Salary_Min', 'Salary_Max']].groupby('City').mean().reset_index()
 
         # Plotting the bar chart for cities
