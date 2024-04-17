@@ -9,19 +9,19 @@ st.title('Popular Name Trends')
 url = 'https://raw.githubusercontent.com/meaganbolton/-Unveiling-Insights-Exploring-Data-Science-Job-Market-Dynamics/main/df_glassdoor.csv'
 df = pd.read_csv(url)
 
+# Get the list of all unique cities
+all_cities = df['City'].unique()
 
-city = st.text_input('Enter a city', value='Houston')
-################################################################333
+# Create checkboxes for selecting cities
+selected_cities = st.multiselect('Select cities', all_cities, default=all_cities)
 
-# Filter data for the selected city
-city_df = df[df['City'] == city]
+# Filter data for the selected cities
+city_df = df[df['City'].isin(selected_cities)]
 
 # Check if city_df is empty
 if city_df.empty:
-    st.write(f"No data found for {city}. Please enter another city.")
+    st.write("No data found for the selected cities. Please select other cities.")
 else:
-    st.header(f'{city} over time')
-
     # Calculate average, min, and max salaries for each city
     city_salary_stats = city_df[['City', 'Salary_Min', 'Salary_Max']].groupby('City').mean().reset_index()
 
@@ -32,7 +32,7 @@ else:
                  orientation='h',
                  barmode='group',
                  labels={'value': 'Salary ($)', 'variable': 'Statistic'},
-                 title=f'Salary Comparison for {city}',
+                 title=f'Salary Comparison for Selected Cities',
                  color_discrete_map={'Salary_Min': 'red', 'Salary_Max': 'blue'},
                  )
 
