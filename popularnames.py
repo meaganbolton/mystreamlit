@@ -20,11 +20,11 @@ pay_rate = st.selectbox("Pay Rate", ('Hourly', 'Yearly'))
 if chart_type == 'Cities':
     # Filter cities based on selected pay rate
     if pay_rate == 'Hourly':
-        available_cities = df[df['Pay rate'] == 'Hourly']['City'].unique()
-    if pay_rate == "Yearly":
-        available_cities = df[df['Pay rate'] == 'Yearly']['City'].unique()
+        available_cities = all_cities[all_cities['Pay rate'] == 'Hourly']
+    elif pay_rate == "Yearly":
+        available_cities = all_cities[all_cities['Pay rate'] == 'Yearly']
     else:
-        available_cities = df['Pay rate']['City'].unique()
+        available_cities = all_cities
 
     # Create checkboxes for selecting cities
     selected_cities = st.multiselect('Select cities', available_cities, default=available_cities)
